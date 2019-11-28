@@ -37,8 +37,14 @@ public class MainActivity extends AppCompatActivity {
 //        Open Network
         conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 
+        int netId = 0;
         WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        int netId = wifiManager.addNetwork(conf);
+        if (wifiManager != null) {
+            wifiManager.setWifiEnabled(true);
+            netId = wifiManager.addNetwork(conf);
+        }
+
+
         wifiManager.disconnect();
         wifiManager.enableNetwork(netId, true);
         wifiManager.reconnect();
